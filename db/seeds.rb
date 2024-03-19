@@ -8,3 +8,22 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+require 'faker'
+
+5.times do
+  client = Client.create(
+    name: Faker::Company.name,
+    description: Faker::Lorem.paragraph
+  )
+
+  rand(3).times do
+    client.students << Student.create(
+      name: Faker::Name.name,
+      date_of_birth: Faker::Date.birthday(min_age: 15, max_age: 22),
+      place_of_birth: Faker::Address.city
+    )
+  end
+end
+
+p "created #{Client.count} clients and #{Student.count} students"
